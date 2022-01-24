@@ -116,6 +116,12 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
 
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     Error:
       type: object
@@ -186,3 +192,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GetTaskSchema'
+
+security:
+  - bearerAuth:
+      - getTasks
+      - createTask
+      - getTask
+      - updateTask
+      - deleteTask
