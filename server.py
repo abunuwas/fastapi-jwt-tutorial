@@ -1,3 +1,6 @@
+from pathlib import Path
+
+import yaml
 from fastapi import FastAPI
 from jwt import ExpiredSignatureError, ImmatureSignatureError, InvalidAlgorithmError, InvalidAudienceError, \
     InvalidKeyError, InvalidSignatureError, InvalidTokenError, MissingRequiredClaimError
@@ -10,6 +13,10 @@ from starlette.responses import Response, JSONResponse
 from auth import decode_and_validate_token
 
 server = FastAPI(debug=True)
+
+oas_doc = yaml.safe_load((Path(__file__).parent / "oas.yaml").read_text())
+
+server.openapi = lambda: oas_doc
 
 
 class AuthorizeRequestMiddleware(BaseHTTPMiddleware):
