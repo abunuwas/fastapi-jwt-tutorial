@@ -2,8 +2,16 @@ from pathlib import Path
 
 import yaml
 from fastapi import FastAPI
-from jwt import ExpiredSignatureError, ImmatureSignatureError, InvalidAlgorithmError, InvalidAudienceError, \
-    InvalidKeyError, InvalidSignatureError, InvalidTokenError, MissingRequiredClaimError
+from jwt import (
+    ExpiredSignatureError,
+    ImmatureSignatureError,
+    InvalidAlgorithmError,
+    InvalidAudienceError,
+    InvalidKeyError,
+    InvalidSignatureError,
+    InvalidTokenError,
+    MissingRequiredClaimError,
+)
 from starlette import status
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.middleware.cors import CORSMiddleware
@@ -35,24 +43,24 @@ class AuthorizeRequestMiddleware(BaseHTTPMiddleware):
                 content={
                     "detail": "Missing access token",
                     "body": "Missing access token",
-                }
+                },
             )
         try:
             auth_token = bearer_token.split(" ")[1].strip()
             token_payload = decode_and_validate_token(auth_token)
         except (
-                ExpiredSignatureError,
-                ImmatureSignatureError,
-                InvalidAlgorithmError,
-                InvalidAudienceError,
-                InvalidKeyError,
-                InvalidSignatureError,
-                InvalidTokenError,
-                MissingRequiredClaimError,
+            ExpiredSignatureError,
+            ImmatureSignatureError,
+            InvalidAlgorithmError,
+            InvalidAudienceError,
+            InvalidKeyError,
+            InvalidSignatureError,
+            InvalidTokenError,
+            MissingRequiredClaimError,
         ) as error:
             return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                content={"detail": str(error), "body": str(error)}
+                content={"detail": str(error), "body": str(error)},
             )
         else:
             request.state.user_id = token_payload["sub"]
@@ -67,7 +75,7 @@ server.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 import api

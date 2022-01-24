@@ -11,20 +11,20 @@ class Error(BaseModel):
 
 
 class Priority(Enum):
-    low = 'low'
-    medium = 'medium'
-    high = 'high'
+    low = "low"
+    medium = "medium"
+    high = "high"
 
 
 class Status(Enum):
-    progress = 'progress'
-    pending = 'pending'
-    completed = 'completed'
+    progress = "progress"
+    pending = "pending"
+    completed = "completed"
 
 
 class CreateTaskSchema(BaseModel):
-    priority: Optional[Priority] = 'low'
-    status: Optional[Status] = 'pending'
+    priority: Optional[Priority] = "low"
+    status: Optional[Status] = "pending"
     task: str
 
 
