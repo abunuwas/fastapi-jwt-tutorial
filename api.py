@@ -14,7 +14,8 @@ TODO = []
 
 
 @server.get('/todo', response_model=ListTasksSchema)
-def get_tasks():
+def get_tasks(request: Request):
+    user_id = request.state.user_id
     return {
         'tasks': TODO
     }
